@@ -1,0 +1,79 @@
+package serpientesYEscaleras;
+
+public class AplSerpientesYEscaleras {
+
+	private static class Casilla{
+		public int noCasilla;
+		public char tipoCasilla;
+		public int posiciones;
+		
+		public Casilla(int nc, char tc, int p) {
+			noCasilla = nc;
+			tipoCasilla = tc;
+			posiciones = p;
+		}
+	}
+	
+	public AplSerpientesYEscaleras() {
+		ListaDBL<Casilla> tablero = new ListaDBL();
+		int nJugadores = Rutinas.nextInt(2,12);
+		NodoDBL<Casilla> []  jugadores = (NodoDBL<Casilla> [])new Object [nJugadores];
+		
+		
+	}
+	
+	public static void main(String[] args) {
+		new AplSerpientesYEscaleras();
+	}
+	
+	private void llenarTablero(ListaDBL<Casilla> tablero) {
+		for(int i = 1; i <= 100; i++) 
+			tablero.InsertaFin(new Casilla(i,'N',0));
+		
+		for(int i =0; i<5; i++)
+			if(!crearEscalera(tablero))
+				i-=1;
+		
+		for(int i =0; i<5; i++)
+			if(!crearSerpiente(tablero))
+				i-=1;
+	}
+	
+	private boolean crearEscalera(ListaDBL<Casilla> tablero){
+		NodoDBL<Casilla> inicio = tablero.getFrente();
+		NodoDBL<Casilla> fin;
+		int casillaInicio = Rutinas.nextInt(15, 70);
+		int avance = Rutinas.nextInt(5,20);
+		for(int i =0; i < casillaInicio; inicio=inicio.getSig(), i++);
+		if(inicio.Info.tipoCasilla != 'N')
+			return false;
+		fin = inicio;
+		
+		for(int i =0; i < avance; fin = fin.getSig(), i++);
+		if(fin.Info.tipoCasilla != 'N')
+			return false;
+		
+		inicio.Info.tipoCasilla = 'E';
+		fin.Info.tipoCasilla = 'T';
+		return true;
+	}
+
+	private boolean crearSerpiente(ListaDBL<Casilla> tablero){
+		NodoDBL<Casilla> inicio = tablero.getFrente();
+		NodoDBL<Casilla> fin;
+		int casillaInicio = Rutinas.nextInt(30, 95);
+		int avance = Rutinas.nextInt(5,20);
+		for(int i =0; i < casillaInicio; inicio=inicio.getSig(), i++);
+		if(inicio.Info.tipoCasilla != 'N')
+			return false;
+		fin = inicio;
+		
+		for(int i =0; i < avance; fin = fin.getAnt(), i++);
+		if(fin.Info.tipoCasilla != 'N')
+			return false;
+		
+		inicio.Info.tipoCasilla = 'E';
+		fin.Info.tipoCasilla = 'T';
+		return true;
+	}	
+}

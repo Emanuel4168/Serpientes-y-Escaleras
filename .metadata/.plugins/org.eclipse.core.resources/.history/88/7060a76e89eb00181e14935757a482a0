@@ -1,0 +1,108 @@
+package serpientesYEscaleras;
+
+public class AplSerpientesYEscaleras {
+
+	private static class Casilla{
+		public int noCasilla;
+		public char tipoCasilla;
+		public int posiciones;
+		
+		public Casilla(int nc, char tc, int p) {
+			noCasilla = nc;
+			tipoCasilla = tc;
+			posiciones = p;
+		}
+	}
+	
+	public AplSerpientesYEscaleras() {
+		boolean avanza = true, finJuego = false;
+		ListaDBL<Casilla> tablero = new ListaDBL();
+		int nJugadores = Rutinas.nextInt(2,12), dado, ganador = 0;
+		NodoDBL<Casilla> []  jugadores = (NodoDBL<Casilla> [])new Object [nJugadores];
+		NodoDBL<Casilla> jugador;
+		
+		llenarTablero(tablero);
+		
+		while(!finJuego) {
+			for(byte i =0; i < jugadores.length; i++) {
+				dado = Rutinas.nextInt(2,12);
+				jugador = jugadores[i];
+				if(jugador == null) {
+					jugador = tablero.getFrente();
+					dado--;
+				}
+
+				for(byte j = 0; j < dado; j++) {
+					if(jugador.getSig() == null)
+						avanza = false;
+					jugador = avanza? jugador.getSig():jugador.getAnt();
+				}
+
+				System.out.println("jugador "+(i+1)+"\t"+"Casilla: "+jugador.Info.noCasilla);
+				if(jugador.Info.noCasilla == 100) {
+					ganador = i;
+					finJuego = true;
+					break;
+				}
+			}
+		}
+		
+		System.out.println("El ganador es el gugador número "+ ganador);
+
+	}
+	
+	public static void main(String[] args) {
+		new AplSerpientesYEscaleras();
+	}
+	
+	private void llenarTablero(ListaDBL<Casilla> tablero) {
+		for(int i = 1; i <= 100; i++) 
+			tablero.InsertaFin(new Casilla(i,'N',0));
+		
+		for(byte i =0; i<5; i++)
+			if(!crearEscalera(tablero))
+				i-=1;
+		
+		for(byte i =0; i<5; i++)
+			if(!crearSerpiente(tablero))
+				i-=1;
+	}
+	
+	private boolean crearEscalera(ListaDBL<Casilla> tablero){
+		NodoDBL<Casilla> inicio = tablero.getFrente();
+		NodoDBL<Casilla> fin;
+		int casillaInicio = Rutinas.nextInt(15, 70);
+		int avance = Rutinas.nextInt(5,20);
+		for(byte i =0; i < casillaInicio; inicio=inicio.getSig(), i++);
+		if(inicio.Info.tipoCasilla != 'N')
+			return false;
+		fin = inicio;
+		
+		for(byte i =0; i < avance; fin = fin.getSig(), i++);
+		if(fin.Info.tipoCasilla != 'N')
+			return false;
+		
+		inicio.Info.tipoCasilla = 'E';
+		fin.Info.tipoCasilla = 'T';
+		return true;
+	}
+
+	private boolean crearSerpiente(ListaDBL<Casilla> tablero){
+		NodoDBL<Casilla> inicio = tablero.getFrente();
+		NodoDBL<Casilla> fin;
+		int casillaInicio = Rutinas.nextInt(30, 95);
+		int avance = Rutinas.nextInt(5,20);
+		for(byte i =0; i < casillaInicio; inicio=inicio.getSig(), i++);
+		if(inicio.Info.tipoCasilla != 'N')
+			return false;
+		fin = inicio;
+		
+		for(byte i =0; i < avance; fin = fin.getAnt(), i++);
+		if(fin.Info.tipoCasilla != 'N')
+			return false;
+		
+		inicio.Info.tipoCasilla = 'E';
+		fin.Info.tipoCasilla = 'T';
+		return true;
+	}	
+}

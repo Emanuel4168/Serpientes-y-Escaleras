@@ -97,13 +97,13 @@ public class AplSerpientesYEscaleras {
 		for(byte i =0; i < casillaInicio; inicio=inicio.getSig(), i++);
 		if(inicio.Info.tipoCasilla != 'N')
 			return false;
-		fin = inicio.getSig();
+		fin = inicio;
 		
 		for(byte i =0; i < avance;  i++) {
-			if(fin.Info.posiciones != 0)
-				return false;
+			//if(fin.Info.posiciones != 0)
+				//return false;
 			fin.Info.posiciones = avance - i;
-			fin = (i != avance-1)? fin.getSig():fin;
+			fin = fin.getSig();
 		}
 		
 		if(fin.Info.tipoCasilla != 'N')
@@ -122,13 +122,13 @@ public class AplSerpientesYEscaleras {
 		for(byte i =0; i < casillaInicio; inicio=inicio.getSig(), i++);
 		if(inicio.Info.tipoCasilla != 'N')
 			return false;
-		fin = inicio.getSig();
+		fin = inicio;
 		
 		for(byte i =0; i < avance; i++) {
-			if(fin.Info.posiciones != 0)
-				return false;
+			//if(fin.Info.posiciones != 0)
+				//return false;
 			fin.Info.posiciones = avance - i;
-			fin = (i != avance-1)? fin.getAnt():fin;
+			fin = fin.getAnt();
 		}
 		
 		if(fin.Info.tipoCasilla != 'N')
