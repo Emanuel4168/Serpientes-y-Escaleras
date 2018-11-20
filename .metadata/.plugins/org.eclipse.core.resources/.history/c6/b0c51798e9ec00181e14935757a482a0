@@ -107,7 +107,8 @@ public class AplSerpientesYEscaleras {
 		inicio.Info.tipoCasilla = 'E';
 		inicio.Info.posiciones = pos;
 		fin.Info.tipoCasilla = 'T';
-		escaleras[pos] = fin;
+		escaleras[pos] = new NodoDBL<Casilla>(inicio.Info);
+		escaleras[pos].setSig(fin);
 		return true;
 	}
 
@@ -131,7 +132,8 @@ public class AplSerpientesYEscaleras {
 		inicio.Info.tipoCasilla = 'S';
 		inicio.Info.posiciones = pos;
 		fin.Info.tipoCasilla = 'T';
-		serpientes[pos] = fin;
+		serpientes[pos] = new NodoDBL<Casilla>(inicio.Info);
+		serpientes[pos].setAnt(fin);
 		return true;
 	}	
 	

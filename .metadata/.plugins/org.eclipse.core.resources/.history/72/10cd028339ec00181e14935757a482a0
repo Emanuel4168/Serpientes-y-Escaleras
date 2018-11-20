@@ -24,8 +24,7 @@ public class AplSerpientesYEscaleras {
 		
 		llenarTablero(tablero,serpientes,escaleras);
 		imbrimirTablero(tablero);
-
-		System.out.println("\n---------------------------------------------------------------\n");
+		//for(byte i = 0; i<jugadores.length; jugadores[i]=tablero.getFrente(), i++);
 		
 		while(!finJuego) {
 			for(byte i =0; i < jugadores.length; i++) {
@@ -33,6 +32,7 @@ public class AplSerpientesYEscaleras {
 				System.out.println("dado:\t"+dado);
 				//jugador = jugadores[i];
 				if(jugadores[i] == null) {
+					System.out.println("XXXXXXXXXXXXXXX");
 					jugadores[i] = tablero.getFrente();
 					dado--;
 				}
@@ -45,14 +45,14 @@ public class AplSerpientesYEscaleras {
 				System.out.println("jugador "+(i+1)+"\tCasilla: "+jugadores[i].Info.noCasilla+"\n");
 				
 				if(jugadores[i].Info.tipoCasilla == 'E') {
-					System.out.println("Escaleras!!");
-					jugadores[i] = escaleras[jugadores[i].Info.posiciones].getSig();
+					System.out.println("\033[32mEscaleras!!");
+					jugadores[i] = escaleras[buscarPosicion(escaleras,jugadores[i].Info.noCasilla)].getSig();
 					System.out.println("nueva posicion jugador "+(i+1)+"\tCasilla: "+jugadores[i].Info.noCasilla+"\n");
 				}
 				
-				if(jugadores[i].Info.tipoCasilla == 'S') {
-					System.out.println("Serpientes!!");
-					jugadores[i] = serpientes[jugadores[i].Info.posiciones].getAnt();
+				if(jugadores[i].Info.tipoCasilla == 'E') {
+					System.out.println("\033[31mSerpientes!!");
+					jugadores[i] = escaleras[buscarPosicion(serpientes,jugadores[i].Info.noCasilla)].getAnt();
 					System.out.println("nueva posicion jugador "+(i+1)+"\tCasilla: "+jugadores[i].Info.noCasilla+"\n");
 				}
 
@@ -79,11 +79,11 @@ public class AplSerpientesYEscaleras {
 		for(int i = 1; i <= 100; i++) 
 			tablero.InsertaFin(new Casilla(i,'N',0));
 		
-		for(byte i =0; i<5; i++)
+		for(byte i =0; i<2; i++)
 			if(!crearEscalera(tablero, escaleras, i))
 				i-=1;
 		
-		for(byte i =0; i<5; i++)
+		for(byte i =0; i<2; i++)
 			if(!crearSerpiente(tablero, serpientes, i))
 				i-=1;
 	}
@@ -98,16 +98,20 @@ public class AplSerpientesYEscaleras {
 			return false;
 		fin = inicio.getSig();
 		
-		for(byte i =0; i < avance;  i++) 
-			fin = fin.getSig();
+		for(byte i =0; i < avance;  i++) {
+			//if(fin.Info.posiciones != 0)
+				//return false;
+			fin.Info.posiciones = avance - i;
+			fin = (i != avance-1)? fin.getSig():fin;
+		}
 		
 		if(fin.Info.tipoCasilla != 'N')
 			return false;
 		
 		inicio.Info.tipoCasilla = 'E';
-		inicio.Info.posiciones = pos;
 		fin.Info.tipoCasilla = 'T';
-		escaleras[pos] = fin;
+		escaleras[pos] = new NodoDBL<Casilla>(inicio.Info);
+		escaleras[pos].setSig(fin);
 		return true;
 	}
 
@@ -121,17 +125,20 @@ public class AplSerpientesYEscaleras {
 			return false;
 		fin = inicio.getSig();
 		
-		for(byte i =0; i < avance; i++) 
-			fin =  fin.getAnt();
-		
+		for(byte i =0; i < avance; i++) {
+			//if(fin.Info.posiciones != 0)
+				//return false;
+			fin.Info.posiciones = avance - i;
+			fin = (i != avance-1)? fin.getAnt():fin;
+		}
 		
 		if(fin.Info.tipoCasilla != 'N')
 			return false;
 		
 		inicio.Info.tipoCasilla = 'S';
-		inicio.Info.posiciones = pos;
 		fin.Info.tipoCasilla = 'T';
-		serpientes[pos] = fin;
+		serpientes[pos] = new NodoDBL<Casilla>(inicio.Info);
+		serpientes[pos].setAnt(fin);
 		return true;
 	}	
 	
@@ -143,5 +150,12 @@ public class AplSerpientesYEscaleras {
 		}
 	}
 	
-
+	private int buscarPosicion(NodoDBL<Casilla> [] ar, int nCasilla) {
+		for(byte i = 0; i<2; i++) {
+			if(ar[i].Info.noCasilla == nCasilla)
+				return i;
+		}
+		System.out.println("DEBUG_ONLY: "+ar[0].Info.noCasilla+"\t"+ar[1].Info.noCasilla+"\t"+nCasilla);
+		return -1;
+	}
 }
