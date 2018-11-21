@@ -38,25 +38,27 @@ public class Rutinas {
 	    	Nom+=" "+Ap[R.nextInt(Ap.length)]+" "+Ap[R.nextInt(Ap.length)];
 	    	
 	    	return Nom;
-	    }
+		}
+		
 	   static public int nextInt(int Valor){
 		   return new Random().nextInt(Valor);
 	   }
+
 	   static public int nextInt(int LimI, int LimS){
 		   return new Random().nextInt(LimS-LimI+1)+LimI;
 	   }
-	   static public String PonBlancos(String Texto,int Tamaño){
-		   while (Texto.length()<Tamaño)
+
+	   static public String PonBlancos(String Texto,int Tam){
+		   while (Texto.length()<Tam)
 			   Texto+=" ";
 		   return Texto;
 	   }
-	   static public String PonCeros(int Numero,int Tamaño){
+
+	   static public String PonCeros(int Numero,int Tam){
 		   String Texto=Numero+"";
 		   
-		   while(Texto.length()<Tamaño)
+		   while(Texto.length()<Tam)
 			   Texto="0"+Texto;
-		   return Texto;
-		   
-		   
+		   return Texto;   
 	   }
 }

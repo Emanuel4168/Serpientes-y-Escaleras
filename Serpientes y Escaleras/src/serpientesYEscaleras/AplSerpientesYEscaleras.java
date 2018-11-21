@@ -46,13 +46,13 @@ public class AplSerpientesYEscaleras {
 				
 				if(jugadores[i].Info.tipoCasilla == 'E') {
 					System.out.println("Escaleras!!");
-					jugadores[i] = escaleras[jugadores[i].Info.posiciones].getSig();
+					jugadores[i] = escaleras[jugadores[i].Info.posiciones];
 					System.out.println("nueva posicion jugador "+(i+1)+"\tCasilla: "+jugadores[i].Info.noCasilla+"\n");
 				}
 				
 				if(jugadores[i].Info.tipoCasilla == 'S') {
 					System.out.println("Serpientes!!");
-					jugadores[i] = serpientes[jugadores[i].Info.posiciones].getAnt();
+					jugadores[i] = serpientes[jugadores[i].Info.posiciones];
 					System.out.println("nueva posicion jugador "+(i+1)+"\tCasilla: "+jugadores[i].Info.noCasilla+"\n");
 				}
 
