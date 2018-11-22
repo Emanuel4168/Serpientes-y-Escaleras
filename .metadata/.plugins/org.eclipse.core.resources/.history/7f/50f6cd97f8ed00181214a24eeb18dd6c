@@ -30,7 +30,7 @@ public class AplSerpientesYEscaleras {
 		while(!finJuego) {
 			for(byte i =0; i < jugadores.length; i++) {
 				dado = Rutinas.nextInt(2,12);
-				System.out.print("dado:\t"+dado);
+				System.out.println("dado:\t"+dado);
 				//jugador = jugadores[i];
 				if(jugadores[i] == null) {
 					jugadores[i] = tablero.getFrente();
@@ -42,7 +42,7 @@ public class AplSerpientesYEscaleras {
 						avanza = false;
 					jugadores[i] = avanza? jugadores[i].getSig():jugadores[i].getAnt();
 				}
-				System.out.print("\tjugador "+(i+1)+"\tCasilla: "+jugadores[i].Info.noCasilla);
+				System.out.print("jugador "+(i+1)+"\tCasilla: "+jugadores[i].Info.noCasilla+"\n");
 				
 				if(jugadores[i].Info.tipoCasilla == 'E') {
 					System.out.print("\tEscaleras!!");
@@ -51,18 +51,18 @@ public class AplSerpientesYEscaleras {
 				}
 				
 				if(jugadores[i].Info.tipoCasilla == 'S') {
-					System.out.print("\tSerpientes!!");
+					System.out.println("\tSerpientes!!");
 					jugadores[i] = jugadores[i].Info.nuevaPosicion;
 					System.out.print("nueva posicion jugador "+(i+1)+"\tCasilla: "+jugadores[i].Info.noCasilla+"\n");
 				}
 
-				System.out.println();
 				
 				if(jugadores[i].Info.noCasilla == 100) {
 					ganador = i+1;
 					finJuego = true;
 					break;
 				}
+				System.out.println();
 				avanza = true;
 			}
 		}

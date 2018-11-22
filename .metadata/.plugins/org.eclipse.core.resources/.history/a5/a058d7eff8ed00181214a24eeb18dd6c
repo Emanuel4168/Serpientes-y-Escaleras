@@ -56,13 +56,13 @@ public class AplSerpientesYEscaleras {
 					System.out.print("nueva posicion jugador "+(i+1)+"\tCasilla: "+jugadores[i].Info.noCasilla+"\n");
 				}
 
-				System.out.println();
 				
 				if(jugadores[i].Info.noCasilla == 100) {
 					ganador = i+1;
 					finJuego = true;
 					break;
 				}
+				System.out.println();
 				avanza = true;
 			}
 		}
