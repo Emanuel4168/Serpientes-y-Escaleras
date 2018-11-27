@@ -19,9 +19,10 @@ public class AplSerpientesYEscaleras {
 		ListaDBL<Casilla> tablero = new ListaDBL();
 		int nJugadores = Rutinas.nextInt(2,10), dado, ganador = 0;
 		NodoDBL<Casilla> []  jugadores = new NodoDBL [nJugadores];
-	
+		NodoDBL<Casilla> []  serpientes = new NodoDBL [5];
+		NodoDBL<Casilla> []  escaleras = new NodoDBL [5];
 		
-		llenarTablero(tablero);
+		llenarTablero(tablero,serpientes,escaleras);
 		imbrimirTablero(tablero);
 
 		System.out.println("\n---------------------------------------------------------------\n");
@@ -30,21 +31,18 @@ public class AplSerpientesYEscaleras {
 			for(byte i =0; i < jugadores.length; i++) {
 				dado = Rutinas.nextInt(2,12);
 				System.out.print("dado:\t"+dado);
-				
+				//jugador = jugadores[i];
 				if(jugadores[i] == null) {
 					jugadores[i] = tablero.getFrente();
 					dado--;
-					System.out.print("\tjugador "+(i+1)+"\tCasilla Inicio: 0");
 				}
-				else
-					System.out.print("\tjugador "+(i+1)+"\tCasilla Inicio: "+jugadores[i].Info.noCasilla);
 
 				for(byte j = 0; j < dado; j++) {
 					if(jugadores[i].getSig() == null)
 						avanza = false;
 					jugadores[i] = avanza? jugadores[i].getSig():jugadores[i].getAnt();
 				}
-				System.out.print("\tCasilla fin: "+jugadores[i].Info.noCasilla);
+				System.out.print("\tjugador "+(i+1)+"\tCasilla: "+jugadores[i].Info.noCasilla);
 				
 				if(jugadores[i].Info.tipoCasilla == 'E') {
 					System.out.print("\tEscaleras!!");
@@ -77,7 +75,7 @@ public class AplSerpientesYEscaleras {
 		new AplSerpientesYEscaleras();
 	}
 	
-	private void llenarTablero(ListaDBL<Casilla> tablero) {
+	private void llenarTablero(ListaDBL<Casilla> tablero, NodoDBL<Casilla> [] serpientes, NodoDBL<Casilla> [] escaleras) {
 		for(int i = 1; i <= 100; i++) 
 			tablero.InsertaFin(new Casilla(i,'N',null));
 		
@@ -138,11 +136,8 @@ public class AplSerpientesYEscaleras {
 	private void imbrimirTablero(ListaDBL<Casilla> l) {
 		NodoDBL<Casilla> it = l.getFrente();
 		while(it != null) {
-			for(byte i = 0; i < 10; i++) {
-				System.out.print("|"+it.Info.noCasilla+"\t"+it.Info.tipoCasilla+"|\t");
-				it = it.getSig();
-			}
-			System.out.println();
+			System.out.println(it.Info.noCasilla+"\t"+it.Info.tipoCasilla);
+			it = it.getSig();
 		}
 	}
 	

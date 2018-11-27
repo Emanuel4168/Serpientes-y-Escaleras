@@ -30,21 +30,18 @@ public class AplSerpientesYEscaleras {
 			for(byte i =0; i < jugadores.length; i++) {
 				dado = Rutinas.nextInt(2,12);
 				System.out.print("dado:\t"+dado);
-				
+				//jugador = jugadores[i];
 				if(jugadores[i] == null) {
 					jugadores[i] = tablero.getFrente();
 					dado--;
-					System.out.print("\tjugador "+(i+1)+"\tCasilla Inicio: 0");
 				}
-				else
-					System.out.print("\tjugador "+(i+1)+"\tCasilla Inicio: "+jugadores[i].Info.noCasilla);
 
 				for(byte j = 0; j < dado; j++) {
 					if(jugadores[i].getSig() == null)
 						avanza = false;
 					jugadores[i] = avanza? jugadores[i].getSig():jugadores[i].getAnt();
 				}
-				System.out.print("\tCasilla fin: "+jugadores[i].Info.noCasilla);
+				System.out.print("\tjugador "+(i+1)+"\tCasilla: "+jugadores[i].Info.noCasilla);
 				
 				if(jugadores[i].Info.tipoCasilla == 'E') {
 					System.out.print("\tEscaleras!!");
