@@ -98,7 +98,7 @@ public class AplSerpientesYEscaleras {
 		for(byte i =0; i < casillaInicio; inicio=inicio.getSig(), i++);
 		if(inicio.Info.tipoCasilla != 'N')
 			return false;
-		fin = inicio;
+		fin = inicio.getSig();
 		
 		for(byte i =0; i < avance;  i++) 
 			fin = fin.getSig();
@@ -120,7 +120,7 @@ public class AplSerpientesYEscaleras {
 		for(byte i =0; i < casillaInicio; inicio=inicio.getSig(), i++);
 		if(inicio.Info.tipoCasilla != 'N')
 			return false;
-		fin = inicio;
+		fin = inicio.getSig();
 		
 		for(byte i =0; i < avance; i++) 
 			fin =  fin.getAnt();
